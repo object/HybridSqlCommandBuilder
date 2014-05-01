@@ -3,24 +3,50 @@
 namespace SqlCommandBuilder.Tests
 {
     [TestFixture]
-    public class UntypedTests
+    public class UntypedTests : TestBase
     {
-        private readonly CommandFormatter _commandFormatter;
-
-        public UntypedTests()
+        protected override Command SelectAllCommand()
         {
-            _commandFormatter = new CommandFormatter();
+            return _commandBuilder
+                .From("Companies")
+                .Build();
         }
 
-        [Test]
-        public void SelectAll()
+        protected override Command SelectAllWhereCommand()
         {
-            var commandText = _commandFormatter
-                .For("Companies")
-                .Where("CompanyName == 'Microsoft'")
-                .Format();
+            return _commandBuilder
+                .From("Companies")
+                .Where("CompanyName='DynamicSoft'")
+                .Build();
+        }
 
-            Assert.AreEqual("SELECT * FROM Companies WHERE Name=='Microsoft'", commandText);
+        protected override Command SelectColumnsWhereCommand()
+        {
+            return _commandBuilder
+                .From("Companies")
+                .Where("CompanyName='DynamicSoft'")
+                .Select(new [] {"CompanyName","Country","City"})
+                .Build();
+        }
+
+        protected override Command SelectAllWhereOrderByCommand()
+        {
+            return _commandBuilder
+                .From("Companies")
+                .Where("CompanyName='DynamicSoft'")
+                .OrderBy("Country")
+                .Build();
+        }
+
+        protected override Command SelectColumnsWhereOrderByCommand()
+        {
+            return _commandBuilder
+                .From("Companies")
+                .Where("YearEstablished>2000 AND NumberOfEmployees<100")
+                .Select(new[] { "CompanyName", "Country", "City" })
+                .OrderBy("Country")
+                .OrderByDescending("YearEstablished")
+                .Build();
         }
     }
 }

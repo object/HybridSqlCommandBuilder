@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicTests.cs" />
+    <Compile Include="TestBase.cs" />
     <Compile Include="TypedTests.cs" />
     <Compile Include="Companies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

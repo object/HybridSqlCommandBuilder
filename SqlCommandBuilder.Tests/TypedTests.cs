@@ -8,24 +8,48 @@ using NUnit.Framework;
 namespace SqlCommandBuilder.Tests
 {
     [TestFixture]
-    public class TypedTests
+    public class TypedTests : TestBase
     {
-        private readonly CommandFormatter _commandFormatter;
-
-        public TypedTests()
+        protected override Command SelectAllCommand()
         {
-            _commandFormatter = new CommandFormatter();
+            return _commandBuilder
+                .From<Companies>()
+                .Build();
         }
 
-        [Test]
-        public void SelectAll()
+        protected override Command SelectAllWhereCommand()
         {
-            var commandText = _commandFormatter
-                .For<Companies>()
-                .Where(x => x.CompanyName == "Microsoft")
-                .Format();
+            return _commandBuilder
+                .From<Companies>()
+                .Where(x => x.CompanyName == "DynamicSoft")
+                .Build();
+        }
 
-            Assert.AreEqual("SELECT * FROM Companies WHERE Name=='Microsoft'", commandText);
+        protected override Command SelectColumnsWhereCommand()
+        {
+            return _commandBuilder
+                .From<Companies>()
+                .Where(x => x.CompanyName == "DynamicSoft")
+                .Select(x => new { x.CompanyName, x.Country, x.City})
+                .Build();
+        }
+
+        protected override Command SelectAllWhereOrderByCommand()
+        {
+            return _commandBuilder.From<Companies>()
+                .Where(x => x.CompanyName == "DynamicSoft")
+                .OrderBy(x => x.Country)
+                .Build();
+        }
+
+        protected override Command SelectColumnsWhereOrderByCommand()
+        {
+            return _commandBuilder.From<Companies>()
+                .Where(x => x.YearEstablished > 2000 && x.NumberOfEmployees < 100)
+                .Select(x => new {x.CompanyName, x.Country, x.City})
+                .OrderBy(x => x.Country)
+                .OrderByDescending(x => x.YearEstablished)
+                .Build();
         }
     }
 }

@@ -4,25 +4,50 @@ using SqlCommandBuilder.Dynamic;
 namespace SqlCommandBuilder.Tests
 {
     [TestFixture]
-    public class DynamicTests
+    public class DynamicTests : TestBase
     {
-        private readonly CommandFormatter _commandFormatter;
-
-        public DynamicTests()
-        {
-            _commandFormatter = new CommandFormatter();
-        }
-
-        [Test]
-        public void SelectAll()
+        protected override Command SelectAllCommand()
         {
             var x = DynamicCommand.Expression;
-            var commandText = _commandFormatter
-                .For(x.Companies)
-                .Where(x.CompanyName == "Microsoft")
-                .Format();
+            return _commandBuilder.From(x.Companies)
+                .Build();
+        }
 
-            Assert.AreEqual("SELECT * FROM Companies WHERE Name=='Microsoft'", commandText);
+        protected override Command SelectAllWhereCommand()
+        {
+            var x = DynamicCommand.Expression;
+            return _commandBuilder.From(x.Companies)
+                .Where(x.CompanyName == "DynamicSoft")
+                .Build();
+        }
+
+        protected override Command SelectColumnsWhereCommand()
+        {
+            var x = DynamicCommand.Expression;
+            return _commandBuilder.From(x.Companies)
+                .Where(x.CompanyName == "DynamicSoft")
+                .Select(x.CompanyName, x.Country, x.City)
+                .Build();
+        }
+
+        protected override Command SelectAllWhereOrderByCommand()
+        {
+            var x = DynamicCommand.Expression;
+            return _commandBuilder.From(x.Companies)
+                .Where(x.CompanyName == "DynamicSoft")
+                .OrderBy(x.Country)
+                .Build();
+        }
+
+        protected override Command SelectColumnsWhereOrderByCommand()
+        {
+            var x = DynamicCommand.Expression;
+            return _commandBuilder.From(x.Companies)
+                .Where(x.YearEstablished > 2000 && x.NumberOfEmployees < 100)
+                .Select(x.CompanyName, x.Country, x.City)
+                .OrderBy(x.Country)
+                .OrderByDescending(x.YearEstablished)
+                .Build();
         }
     }
 }
