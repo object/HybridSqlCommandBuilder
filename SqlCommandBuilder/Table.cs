@@ -1,6 +1,6 @@
 ﻿namespace SqlCommandBuilder
 {
-    public class DataTable
+    public class Table
     {
     }
 }
