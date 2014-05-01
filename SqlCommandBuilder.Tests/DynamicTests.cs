@@ -9,22 +9,34 @@ namespace SqlCommandBuilder.Tests
         protected override Command SelectAllCommand()
         {
             var x = DynamicCommand.Expression;
-            return _commandBuilder.From(x.Companies)
+            return _commandBuilder
+                .From(x.Companies)
                 .Build();
         }
 
         protected override Command SelectAllWhereCommand()
         {
             var x = DynamicCommand.Expression;
-            return _commandBuilder.From(x.Companies)
+            return _commandBuilder
+                .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
+                .Build();
+        }
+
+        protected override Command SelectAllWhereFunctionCommand()
+        {
+            var x = DynamicCommand.Expression;
+            return _commandBuilder
+                .From(x.Companies)
+                .Where(x.CompanyName.Length() < 10 && x.CompanyName == x.CompanyName.ToUpper())
                 .Build();
         }
 
         protected override Command SelectColumnsWhereCommand()
         {
             var x = DynamicCommand.Expression;
-            return _commandBuilder.From(x.Companies)
+            return _commandBuilder
+                .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
                 .Select(x.CompanyName, x.Country, x.City)
                 .Build();
@@ -33,7 +45,8 @@ namespace SqlCommandBuilder.Tests
         protected override Command SelectAllWhereOrderByCommand()
         {
             var x = DynamicCommand.Expression;
-            return _commandBuilder.From(x.Companies)
+            return _commandBuilder
+                .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
                 .OrderBy(x.Country)
                 .Build();
@@ -42,7 +55,8 @@ namespace SqlCommandBuilder.Tests
         protected override Command SelectColumnsWhereOrderByCommand()
         {
             var x = DynamicCommand.Expression;
-            return _commandBuilder.From(x.Companies)
+            return _commandBuilder
+                .From(x.Companies)
                 .Where(x.YearEstablished > 2000 && x.NumberOfEmployees < 100)
                 .Select(x.CompanyName, x.Country, x.City)
                 .OrderBy(x.Country)

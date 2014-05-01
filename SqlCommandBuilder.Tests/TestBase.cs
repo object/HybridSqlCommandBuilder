@@ -13,6 +13,7 @@ namespace SqlCommandBuilder.Tests
 
         protected abstract Command SelectAllCommand();
         protected abstract Command SelectAllWhereCommand();
+        protected abstract Command SelectAllWhereFunctionCommand();
         protected abstract Command SelectColumnsWhereCommand();
         protected abstract Command SelectAllWhereOrderByCommand();
         protected abstract Command SelectColumnsWhereOrderByCommand();
@@ -31,6 +32,14 @@ namespace SqlCommandBuilder.Tests
             Assert.AreEqual(
                 "SELECT * FROM Companies WHERE CompanyName='DynamicSoft'", 
                 SelectAllWhereCommand().ToString());
+        }
+
+        [Test]
+        public void SelectAllWhereFunction()
+        {
+            Assert.AreEqual(
+                "SELECT * FROM Companies WHERE LEN(CompanyName)<10 AND CompanyName=UPPER(CompanyName)",
+                SelectAllWhereFunctionCommand().ToString());
         }
 
         [Test]

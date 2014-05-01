@@ -25,6 +25,14 @@ namespace SqlCommandBuilder.Tests
                 .Build();
         }
 
+        protected override Command SelectAllWhereFunctionCommand()
+        {
+            return _commandBuilder
+                .From<Companies>()
+                .Where(x => x.CompanyName.Length < 10 && x.CompanyName == x.CompanyName.ToUpper())
+                .Build();
+        }
+
         protected override Command SelectColumnsWhereCommand()
         {
             return _commandBuilder
