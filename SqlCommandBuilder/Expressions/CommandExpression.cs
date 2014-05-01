@@ -100,28 +100,5 @@ namespace SqlCommandBuilder
         {
             return ToString();
         }
-
-        internal bool ExtractEqualityComparisons(IDictionary<string, object> columnEqualityComparisons)
-        {
-            switch (_operator)
-            {
-                case ExpressionOperator.AND:
-                    _left.ExtractEqualityComparisons(columnEqualityComparisons);
-                    _right.ExtractEqualityComparisons(columnEqualityComparisons);
-                    return true;
-
-                case ExpressionOperator.EQ:
-                    if (!string.IsNullOrEmpty(_left.Reference))
-                    {
-                        var key = _left.ToString().Split('.').Last();
-                        if (!columnEqualityComparisons.ContainsKey(key))
-                            columnEqualityComparisons.Add(key, _right);
-                    }
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
     }
 }

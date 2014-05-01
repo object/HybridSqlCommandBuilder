@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SqlCommandBuilder
 {
-    internal class FunctionMapping
+    class FunctionMapping
     {
         public string FunctionName { get; private set; }
         public Func<string, string, IEnumerable<object>, CommandExpression> FunctionMapper { get; private set; }

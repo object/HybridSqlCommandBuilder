@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace SqlCommandBuilder
 {
-    internal static class ValueFormatterExtensions
+    static class ValueFormatterExtensions
     {
         public static string FormatValue(this decimal number)
         {

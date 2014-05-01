@@ -7,9 +7,9 @@ namespace SqlCommandBuilder
 {
     public class CommandBuilder
     {
-        public ICommandBuilder<Table> From(string tableName)
+        public ICommandBuilder<object> From(string tableName)
         {
-            return new CommandBuilder<Table>(tableName);
+            return new CommandBuilder<object>(tableName);
         }
 
         public ICommandBuilder<T> From<T>()
@@ -17,9 +17,9 @@ namespace SqlCommandBuilder
             return new CommandBuilder<T>(typeof(T).Name);
         }
 
-        public ICommandBuilder<Table> From(CommandExpression expression)
+        public ICommandBuilder<object> From(CommandExpression expression)
         {
-            return new CommandBuilder<Table>(expression);
+            return new CommandBuilder<object>(expression);
         }
     }
 
@@ -120,7 +120,7 @@ namespace SqlCommandBuilder
             return this;
         }
 
-        internal static IEnumerable<string> ExtractColumnNames(Expression<Func<T, object>> expression)
+        private static IEnumerable<string> ExtractColumnNames(Expression<Func<T, object>> expression)
         {
             var lambdaExpression = Utils.CastExpressionWithTypeCheck<LambdaExpression>(expression);
             switch (lambdaExpression.Body.NodeType)
@@ -138,7 +138,7 @@ namespace SqlCommandBuilder
             }
         }
 
-        internal static string ExtractColumnName(Expression expression)
+        private static string ExtractColumnName(Expression expression)
         {
             switch (expression.NodeType)
             {

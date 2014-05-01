@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SqlCommandBuilder
 {
-    internal class ValueFormatter
+    class ValueFormatter
     {
         public string Format(IDictionary<string, object> keyValues, string separator = ",")
         {

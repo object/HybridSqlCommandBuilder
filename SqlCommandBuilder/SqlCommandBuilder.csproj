@@ -38,7 +38,6 @@
     <Compile Include="Expressions\CommandExpression.Format.cs" />
     <Compile Include="Expressions\CommandExpression.Linq.cs" />
     <Compile Include="Expressions\CommandExpression.Operators.cs" />
-    <Compile Include="Table.cs" />
     <Compile Include="Expressions\ExpressionFunction.cs" />
     <Compile Include="Expressions\ExpressionOperator.cs" />
     <Compile Include="Command.cs" />
