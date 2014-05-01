@@ -19,7 +19,7 @@ namespace SqlCommandBuilder
 
         public ICommandBuilder<Table> From(CommandExpression expression)
         {
-            throw new NotImplementedException();
+            return new CommandBuilder<Table>(expression);
         }
     }
 
@@ -30,6 +30,11 @@ namespace SqlCommandBuilder
         public CommandBuilder(string tableName)
         {
             _command.From(tableName);
+        }
+
+        public CommandBuilder(CommandExpression expression)
+        {
+            _command.From(expression.Reference);
         }
 
         public Command Build()
@@ -51,7 +56,8 @@ namespace SqlCommandBuilder
 
         public ICommandBuilder<T> Where(CommandExpression expression)
         {
-            throw new NotImplementedException();
+            _command.Where(expression);
+            return this;
         }
 
         public ICommandBuilder<T> Select(IEnumerable<string> columns)
@@ -74,7 +80,8 @@ namespace SqlCommandBuilder
 
         public ICommandBuilder<T> Select(params CommandExpression[] columns)
         {
-            throw new NotImplementedException();
+            _command.Select(columns);
+            return this;
         }
 
         public ICommandBuilder<T> OrderBy(params string[] columns)
@@ -91,7 +98,8 @@ namespace SqlCommandBuilder
 
         public ICommandBuilder<T> OrderBy(params CommandExpression[] columns)
         {
-            throw new NotImplementedException();
+            _command.OrderBy(columns);
+            return this;
         }
 
         public ICommandBuilder<T> OrderByDescending(params string[] columns)
@@ -108,7 +116,8 @@ namespace SqlCommandBuilder
 
         public ICommandBuilder<T> OrderByDescending(params CommandExpression[] columns)
         {
-            throw new NotImplementedException();
+            _command.OrderByDescending(columns);
+            return this;
         }
 
         internal static IEnumerable<string> ExtractColumnNames(Expression<Func<T, object>> expression)

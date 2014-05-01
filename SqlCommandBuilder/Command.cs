@@ -18,16 +18,6 @@ namespace SqlCommandBuilder
         {
         }
 
-        private Command(Command command)
-        {
-            _table = command._table;
-            _tableExpression = command._tableExpression;
-            _where = command._where;
-            _whereExpression = command._whereExpression;
-            _selectColumns = command._selectColumns;
-            _orderByColumns = command._orderByColumns;
-        }
-
         public void From(string tableName)
         {
             _table = tableName;
@@ -48,14 +38,29 @@ namespace SqlCommandBuilder
             _selectColumns.AddRange(columns);
         }
 
+        public void Select(params CommandExpression[] columns)
+        {
+            Select(columns.Select(x => x.Reference));
+        }
+
         public void OrderBy(IEnumerable<string> columns)
         {
             _orderByColumns.AddRange(columns.Select(x => new KeyValuePair<string, bool>(x, false)));
         }
 
+        public void OrderBy(params CommandExpression[] columns)
+        {
+            OrderBy(columns.Select(x => x.Reference));
+        }
+
         public void OrderByDescending(IEnumerable<string> columns)
         {
             _orderByColumns.AddRange(columns.Select(x => new KeyValuePair<string, bool>(x, true)));
+        }
+
+        public void OrderByDescending(params CommandExpression[] columns)
+        {
+            OrderByDescending(columns.Select(x => x.Reference));
         }
 
         public override string ToString()
