@@ -11,17 +11,17 @@ namespace SqlCommandBuilder
         Command Build();
 
         ICommandBuilder<T> Where(string condition);
-        ICommandBuilder<T> Where(CommandExpression expression);
         ICommandBuilder<T> Where(Expression<Func<T, bool>> expression);
+        ICommandBuilder<T> Where(CommandExpression expression);
         ICommandBuilder<T> Select(IEnumerable<string> columns);
         ICommandBuilder<T> Select(params string[] columns);
-        ICommandBuilder<T> Select(params CommandExpression[] columns);
         ICommandBuilder<T> Select(Expression<Func<T, object>> expression);
+        ICommandBuilder<T> Select(params CommandExpression[] columns);
         ICommandBuilder<T> OrderBy(params string[] columns);
-        ICommandBuilder<T> OrderBy(params CommandExpression[] columns);
         ICommandBuilder<T> OrderBy(Expression<Func<T, object>> expression);
+        ICommandBuilder<T> OrderBy(params CommandExpression[] columns);
         ICommandBuilder<T> OrderByDescending(params string[] columns);
-        ICommandBuilder<T> OrderByDescending(params CommandExpression[] columns);
         ICommandBuilder<T> OrderByDescending(Expression<Func<T, object>> expression);
+        ICommandBuilder<T> OrderByDescending(params CommandExpression[] columns);
     }
 }

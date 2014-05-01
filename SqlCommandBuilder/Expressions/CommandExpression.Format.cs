@@ -30,11 +30,11 @@ namespace SqlCommandBuilder
                 var right = FormatExpression(_right);
                 var op = FormatOperator();
                 if (NeedsGrouping(_left))
-                    return string.Format("({0}) {1} {2}", left, op, right);
+                    return string.Format("({0}){1}{2}", left, op, right);
                 else if (NeedsGrouping(_right))
-                    return string.Format("{0} {1} ({2})", left, op, right);
+                    return string.Format("{0}{1}({2})", left, op, right);
                 else
-                    return string.Format("{0} {1} {2}", left, op, right);
+                    return string.Format("{0}{1}{2}", left, op, right);
             }
         }
 
@@ -80,33 +80,33 @@ namespace SqlCommandBuilder
             switch (_operator)
             {
                 case ExpressionOperator.AND:
-                    return "and";
+                    return " AND ";
                 case ExpressionOperator.OR:
-                    return "or";
+                    return " OR ";
                 case ExpressionOperator.NOT:
-                    return "not";
+                    return "NOT ";
                 case ExpressionOperator.EQ:
-                    return "eq";
+                    return "=";
                 case ExpressionOperator.NE:
-                    return "ne";
+                    return "<>";
                 case ExpressionOperator.GT:
-                    return "gt";
+                    return ">";
                 case ExpressionOperator.GE:
-                    return "ge";
+                    return ">=";
                 case ExpressionOperator.LT:
-                    return "lt";
+                    return "<";
                 case ExpressionOperator.LE:
-                    return "le";
+                    return "<=";
                 case ExpressionOperator.ADD:
-                    return "add";
+                    return "+";
                 case ExpressionOperator.SUB:
-                    return "sub";
+                    return "-";
                 case ExpressionOperator.MUL:
-                    return "mul";
+                    return "*";
                 case ExpressionOperator.DIV:
-                    return "div";
+                    return "/";
                 case ExpressionOperator.MOD:
-                    return "mod";
+                    return "%";
                 case ExpressionOperator.NEG:
                     return "-";
                 default:

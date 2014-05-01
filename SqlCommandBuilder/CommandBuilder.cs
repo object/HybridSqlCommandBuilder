@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace SqlCommandBuilder
@@ -13,7 +14,7 @@ namespace SqlCommandBuilder
 
         public ICommandBuilder<T> From<T>()
         {
-            throw new NotImplementedException();
+            return new CommandBuilder<T>(typeof(T).Name);
         }
 
         public ICommandBuilder<Table> From(CommandExpression expression)
@@ -42,12 +43,13 @@ namespace SqlCommandBuilder
             return this;
         }
 
-        public ICommandBuilder<T> Where(CommandExpression expression)
+        public ICommandBuilder<T> Where(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            _command.Where(CommandExpression.FromLinqExpression(expression.Body));
+            return this;
         }
 
-        public ICommandBuilder<T> Where(Expression<Func<T, bool>> expression)
+        public ICommandBuilder<T> Where(CommandExpression expression)
         {
             throw new NotImplementedException();
         }
@@ -64,12 +66,13 @@ namespace SqlCommandBuilder
             return this;
         }
 
-        public ICommandBuilder<T> Select(params CommandExpression[] columns)
+        public ICommandBuilder<T> Select(Expression<Func<T, object>> expression)
         {
-            throw new NotImplementedException();
+            _command.Select(ExtractColumnNames(expression));
+            return this;
         }
 
-        public ICommandBuilder<T> Select(Expression<Func<T, object>> expression)
+        public ICommandBuilder<T> Select(params CommandExpression[] columns)
         {
             throw new NotImplementedException();
         }
@@ -80,12 +83,13 @@ namespace SqlCommandBuilder
             return this;
         }
 
-        public ICommandBuilder<T> OrderBy(params CommandExpression[] columns)
+        public ICommandBuilder<T> OrderBy(Expression<Func<T, object>> expression)
         {
-            throw new NotImplementedException();
+            _command.OrderBy(ExtractColumnNames(expression));
+            return this;
         }
 
-        public ICommandBuilder<T> OrderBy(Expression<Func<T, object>> expression)
+        public ICommandBuilder<T> OrderBy(params CommandExpression[] columns)
         {
             throw new NotImplementedException();
         }
@@ -96,14 +100,51 @@ namespace SqlCommandBuilder
             return this;
         }
 
+        public ICommandBuilder<T> OrderByDescending(Expression<Func<T, object>> expression)
+        {
+            _command.OrderByDescending(ExtractColumnNames(expression));
+            return this;
+        }
+
         public ICommandBuilder<T> OrderByDescending(params CommandExpression[] columns)
         {
             throw new NotImplementedException();
         }
 
-        public ICommandBuilder<T> OrderByDescending(Expression<Func<T, object>> expression)
+        internal static IEnumerable<string> ExtractColumnNames(Expression<Func<T, object>> expression)
         {
-            throw new NotImplementedException();
+            var lambdaExpression = Utils.CastExpressionWithTypeCheck<LambdaExpression>(expression);
+            switch (lambdaExpression.Body.NodeType)
+            {
+                case ExpressionType.MemberAccess:
+                case ExpressionType.Convert:
+                    return new[] { ExtractColumnName(lambdaExpression.Body) };
+
+                case ExpressionType.New:
+                    var newExpression = lambdaExpression.Body as NewExpression;
+                    return newExpression.Arguments.Select(ExtractColumnName);
+
+                default:
+                    throw Utils.NotSupportedExpression(lambdaExpression.Body);
+            }
+        }
+
+        internal static string ExtractColumnName(Expression expression)
+        {
+            switch (expression.NodeType)
+            {
+                case ExpressionType.MemberAccess:
+                    return (expression as MemberExpression).Member.Name;
+
+                case ExpressionType.Convert:
+                    return ExtractColumnName((expression as UnaryExpression).Operand);
+
+                case ExpressionType.Lambda:
+                    return ExtractColumnName((expression as LambdaExpression).Body);
+
+                default:
+                    throw Utils.NotSupportedExpression(expression);
+            }
         }
     }
 }
