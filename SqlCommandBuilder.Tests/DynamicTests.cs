@@ -78,12 +78,36 @@ namespace SqlCommandBuilder.Tests
         }
 
         [Test]
-        public void ExecuteFindAll()
+        public void ExecuteFindAllAsEnumerable()
         {
             var x = DynamicCommand.Expression;
             var command = SelectAllCommand();
             var commandProcessor = new FakeCommandProcessor(command);
             IEnumerable<dynamic> result = commandProcessor.FindAll(x.Companies);
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("DynamicSoft", result.First().CompanyName);
+            Assert.AreEqual("StaticSoft", result.Last().CompanyName);
+        }
+
+        [Test]
+        public void ExecuteFindAllAsList()
+        {
+            var x = DynamicCommand.Expression;
+            var command = SelectAllCommand();
+            var commandProcessor = new FakeCommandProcessor(command);
+            List<dynamic> result = commandProcessor.FindAll(x.Companies);
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("DynamicSoft", result.First().CompanyName);
+            Assert.AreEqual("StaticSoft", result.Last().CompanyName);
+        }
+
+        [Test]
+        public void ExecuteFindAllAsArray()
+        {
+            var x = DynamicCommand.Expression;
+            var command = SelectAllCommand();
+            var commandProcessor = new FakeCommandProcessor(command);
+            dynamic[] result = commandProcessor.FindAll(x.Companies);
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("DynamicSoft", result.First().CompanyName);
             Assert.AreEqual("StaticSoft", result.Last().CompanyName);
