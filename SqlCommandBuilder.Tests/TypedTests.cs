@@ -59,5 +59,25 @@ namespace SqlCommandBuilder.Tests
                 .OrderByDescending(x => x.YearEstablished)
                 .Build();
         }
+
+        [Test]
+        public void ExecuteFindOne()
+        {
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            var result = commandProcessor.FindOne<Companies>();
+            Assert.AreEqual("DynamicSoft", result.CompanyName);
+        }
+
+        [Test]
+        public void ExecuteFindAll()
+        {
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            var result = commandProcessor.FindAll<Companies>();
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("DynamicSoft", result.First().CompanyName);
+            Assert.AreEqual("StaticSoft", result.Last().CompanyName);
+        }
     }
 }

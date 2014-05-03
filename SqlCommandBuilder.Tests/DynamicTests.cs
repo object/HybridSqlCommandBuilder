@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using SqlCommandBuilder.Dynamic;
 
 namespace SqlCommandBuilder.Tests
@@ -62,6 +65,50 @@ namespace SqlCommandBuilder.Tests
                 .OrderBy(x.Country)
                 .OrderByDescending(x.YearEstablished)
                 .Build();
+        }
+
+        [Test]
+        public void ExecuteFindOne()
+        {
+            var x = DynamicCommand.Expression;
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            var result = commandProcessor.FindOne(x.Companies);
+            Assert.AreEqual("DynamicSoft", result.CompanyName);
+        }
+
+        [Test]
+        public void ExecuteFindAll()
+        {
+            var x = DynamicCommand.Expression;
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            IEnumerable<dynamic> result = commandProcessor.FindAll(x.Companies);
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("DynamicSoft", result.First().CompanyName);
+            Assert.AreEqual("StaticSoft", result.Last().CompanyName);
+        }
+
+        [Test]
+        public void ExecuteFindOneAsTyped()
+        {
+            var x = DynamicCommand.Expression;
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            Companies result = commandProcessor.FindOne(x.Companies);
+            Assert.AreEqual("DynamicSoft", result.CompanyName);
+        }
+
+        [Test, Ignore]
+        public void ExecuteFindAllAsTyped()
+        {
+            var x = DynamicCommand.Expression;
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            IEnumerable<Companies> result = commandProcessor.FindAll(x.Companies);
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("DynamicSoft", result.First().CompanyName);
+            Assert.AreEqual("StaticSoft", result.Last().CompanyName);
         }
     }
 }

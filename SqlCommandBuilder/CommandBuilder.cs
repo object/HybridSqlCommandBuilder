@@ -7,9 +7,9 @@ namespace SqlCommandBuilder
 {
     public class CommandBuilder
     {
-        public ICommandBuilder<object> From(string tableName)
+        public ICommandBuilder<Record> From(string tableName)
         {
-            return new CommandBuilder<object>(tableName);
+            return new CommandBuilder<Record>(tableName);
         }
 
         public ICommandBuilder<T> From<T>()
@@ -17,9 +17,9 @@ namespace SqlCommandBuilder
             return new CommandBuilder<T>(typeof(T).Name);
         }
 
-        public ICommandBuilder<object> From(CommandExpression expression)
+        public ICommandBuilder<Record> From(CommandExpression expression)
         {
-            return new CommandBuilder<object>(expression);
+            return new CommandBuilder<Record>(expression);
         }
     }
 

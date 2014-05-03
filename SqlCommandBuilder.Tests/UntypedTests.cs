@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace SqlCommandBuilder.Tests
 {
@@ -55,6 +56,26 @@ namespace SqlCommandBuilder.Tests
                 .OrderBy("Country")
                 .OrderByDescending("YearEstablished")
                 .Build();
+        }
+
+        [Test]
+        public void ExecuteFindOne()
+        {
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            var result = commandProcessor.FindOne();
+            Assert.AreEqual("DynamicSoft", result["CompanyName"]);
+        }
+
+        [Test]
+        public void ExecuteFindAll()
+        {
+            var command = SelectAllCommand();
+            var commandProcessor = new DummyCommandProcessor(command);
+            var result = commandProcessor.FindAll();
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("DynamicSoft", result.First()["CompanyName"]);
+            Assert.AreEqual("StaticSoft", result.Last()["CompanyName"]);
         }
     }
 }
