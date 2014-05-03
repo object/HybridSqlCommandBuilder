@@ -72,7 +72,7 @@ namespace SqlCommandBuilder.Tests
         {
             var x = DynamicCommand.Expression;
             var command = SelectAllCommand();
-            var commandProcessor = new DummyCommandProcessor(command);
+            var commandProcessor = new FakeCommandProcessor(command);
             var result = commandProcessor.FindOne(x.Companies);
             Assert.AreEqual("DynamicSoft", result.CompanyName);
         }
@@ -82,7 +82,7 @@ namespace SqlCommandBuilder.Tests
         {
             var x = DynamicCommand.Expression;
             var command = SelectAllCommand();
-            var commandProcessor = new DummyCommandProcessor(command);
+            var commandProcessor = new FakeCommandProcessor(command);
             IEnumerable<dynamic> result = commandProcessor.FindAll(x.Companies);
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("DynamicSoft", result.First().CompanyName);
@@ -94,17 +94,17 @@ namespace SqlCommandBuilder.Tests
         {
             var x = DynamicCommand.Expression;
             var command = SelectAllCommand();
-            var commandProcessor = new DummyCommandProcessor(command);
+            var commandProcessor = new FakeCommandProcessor(command);
             Companies result = commandProcessor.FindOne(x.Companies);
             Assert.AreEqual("DynamicSoft", result.CompanyName);
         }
 
-        [Test, Ignore]
+        [Test]
         public void ExecuteFindAllAsTyped()
         {
             var x = DynamicCommand.Expression;
             var command = SelectAllCommand();
-            var commandProcessor = new DummyCommandProcessor(command);
+            var commandProcessor = new FakeCommandProcessor(command);
             IEnumerable<Companies> result = commandProcessor.FindAll(x.Companies);
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("DynamicSoft", result.First().CompanyName);

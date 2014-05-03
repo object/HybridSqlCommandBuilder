@@ -5,42 +5,42 @@ using System.Reflection;
 
 namespace SqlCommandBuilder.Dynamic
 {
-    public class DynamicRecord : Record, IDynamicMetaObjectProvider
+    public class DynamicResultRow : ResultRow, IDynamicMetaObjectProvider
     {
-        internal DynamicRecord()
+        internal DynamicResultRow()
         {
         }
 
-        internal DynamicRecord(IDictionary<string, object> entry)
-            : base(entry)
+        internal DynamicResultRow(IDictionary<string, object> data)
+            : base(data)
         {
         }
 
-        private object GetEntryValue(string propertyName)
+        private object GetPropertyValue(string propertyName)
         {
             var value = base[propertyName];
             if (value is IDictionary<string, object>)
-                value = new DynamicRecord(value as IDictionary<string, object>);
+                value = new DynamicResultRow(value as IDictionary<string, object>);
             return value;
         }
 
         public DynamicMetaObject GetMetaObject(Expression parameter)
         {
-            return new DynamicEntryMetaObject(parameter, this);
+            return new DynamicRowMetaObject(parameter, this);
         }
 
-        private class DynamicEntryMetaObject : DynamicMetaObject
+        private class DynamicRowMetaObject : DynamicMetaObject
         {
-            internal DynamicEntryMetaObject(
+            internal DynamicRowMetaObject(
                 Expression parameter,
-                DynamicRecord value)
+                DynamicResultRow value)
                 : base(parameter, BindingRestrictions.Empty, value)
             {
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
             {
-                var methodInfo = typeof(DynamicRecord).GetMethod("GetEntryValue", BindingFlags.Instance | BindingFlags.NonPublic);
+                var methodInfo = typeof(DynamicResultRow).GetMethod("GetPropertyValue", BindingFlags.Instance | BindingFlags.NonPublic);
                 var arguments = new Expression[]
                 {
                     Expression.Constant(binder.Name)
@@ -54,27 +54,12 @@ namespace SqlCommandBuilder.Dynamic
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
             {
                 var value = this.HasValue
-                    ? (this.Value as Record).AsDictionary().ToObject(binder.Type)
+                    ? (this.Value as ResultRow).AsDictionary().ToObject(binder.Type)
                     : null;
 
                 return new DynamicMetaObject(
                     Expression.Constant(value),
                     BindingRestrictions.GetTypeRestriction(Expression, LimitType));
-            }
-
-            public override DynamicMetaObject BindInvoke(InvokeBinder binder, DynamicMetaObject[] args)
-            {
-                return base.BindInvoke(binder, args);
-            }
-
-            public override DynamicMetaObject BindInvokeMember(InvokeMemberBinder binder, DynamicMetaObject[] args)
-            {
-                return base.BindInvokeMember(binder, args);
-            }
-
-            public override DynamicMetaObject BindCreateInstance(CreateInstanceBinder binder, DynamicMetaObject[] args)
-            {
-                return base.BindCreateInstance(binder, args);
             }
         }
     }

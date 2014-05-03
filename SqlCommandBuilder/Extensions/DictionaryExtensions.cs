@@ -9,7 +9,7 @@ namespace SqlCommandBuilder
     {
         private static readonly Dictionary<Type, ConstructorInfo> _constructors = new Dictionary<Type, ConstructorInfo>();
 
-        internal static Func<IDictionary<string, object>, Record> CreateDynamicRecord { get; set; }
+        internal static Func<IDictionary<string, object>, ResultRow> CreateDynamicResultRow { get; set; }
 
         public static T ToObject<T>(this IDictionary<string, object> source, bool dynamicObject = false)
             where T : class
@@ -18,31 +18,25 @@ namespace SqlCommandBuilder
                 return default(T);
             if (typeof (IDictionary<string, object>).IsAssignableFrom(typeof(T)))
                 return source as T;
-            if (typeof(T) == typeof(Record))
-                return CreateRecord(source, dynamicObject) as T;
+            if (typeof(T) == typeof(ResultRow))
+                return CreateResultRow(source, dynamicObject) as T;
 
-            var value = CreateInstance<T>();
-            var type = value.GetType();
-            return (T)ToObject(source, type, value, dynamicObject);
+            return (T)ToObject(source, typeof(T), dynamicObject);
         }
 
-        public static object ToObject(this IDictionary<string, object> source, Type type, object value = null, bool dynamicObject = false)
+        public static object ToObject(this IDictionary<string, object> source, Type type, bool dynamicObject = false)
         {
             if (source == null)
                 return null;
             if (typeof(IDictionary<string, object>).IsAssignableFrom(type))
                 return source;
-            if (type == typeof(Record))
-                return CreateRecord(source, dynamicObject);
+            if (type == typeof(ResultRow) || type == typeof(object))
+                return CreateResultRow(source, dynamicObject);
 
-            if (value == null)
-            {
-                var defaultConstructor = type.GetConstructor(new Type[] {});
-                if (defaultConstructor != null)
-                {
-                    value = defaultConstructor.Invoke(new object[] { });
-                }
-            }
+            var defaultConstructor = type.GetConstructor(new Type[] { });
+            if (defaultConstructor == null)
+                throw new NotImplementedException(string.Format("Type {0} doesn't have a default constructor", type));
+            var value = defaultConstructor.Invoke(new object[] { });
 
             Func<Type, bool> IsCompoundType = fieldOrPropertyType =>
             {
@@ -125,8 +119,8 @@ namespace SqlCommandBuilder
                 return new Dictionary<string, object>();
             if (source is IDictionary<string, object>)
                 return source as IDictionary<string, object>;
-            if (source is Record)
-                return (Dictionary<string, object>)(source as Record);
+            if (source is ResultRow)
+                return (Dictionary<string, object>)(source as ResultRow);
 
             return source.GetType().GetProperties(bindingAttr).ToDictionary
             (
@@ -170,11 +164,11 @@ namespace SqlCommandBuilder
             return ctor.Invoke(new object[] { }) as T;
         }
 
-        private static Record CreateRecord(IDictionary<string, object> source, bool dynamicObject = false)
+        private static ResultRow CreateResultRow(IDictionary<string, object> source, bool dynamicObject = false)
         {
-            return dynamicObject && CreateDynamicRecord != null ?
-                CreateDynamicRecord(source) : 
-                new Record(source);
+            return dynamicObject && CreateDynamicResultRow != null ?
+                CreateDynamicResultRow(source) : 
+                new ResultRow(source);
         }
     }
 }

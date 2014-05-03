@@ -62,7 +62,7 @@ namespace SqlCommandBuilder.Tests
         public void ExecuteFindOne()
         {
             var command = SelectAllCommand();
-            var commandProcessor = new DummyCommandProcessor(command);
+            var commandProcessor = new FakeCommandProcessor(command);
             var result = commandProcessor.FindOne();
             Assert.AreEqual("DynamicSoft", result["CompanyName"]);
         }
@@ -71,7 +71,7 @@ namespace SqlCommandBuilder.Tests
         public void ExecuteFindAll()
         {
             var command = SelectAllCommand();
-            var commandProcessor = new DummyCommandProcessor(command);
+            var commandProcessor = new FakeCommandProcessor(command);
             var result = commandProcessor.FindAll();
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("DynamicSoft", result.First()["CompanyName"]);

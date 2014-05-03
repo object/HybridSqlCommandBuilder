@@ -20,31 +20,31 @@ namespace SqlCommandBuilder
             return FindAll<T>().FirstOrDefault();
         }
 
-        public Record FindOne()
+        public ResultRow FindOne()
         {
-            return FindOne<Record>();
+            return FindOne<ResultRow>();
         }
 
-        public Record FindOne(CommandExpression expression)
+        public ResultRow FindOne(CommandExpression expression)
         {
-            return FindOne<Record>();
+            return FindOne<ResultRow>();
         }
 
         public IEnumerable<T> FindAll<T>() where T : class
         {
-            return Execute().Select(x => x.AsDictionary().ToObject<T>(EnableDynamics));
+            return Execute().AsEnumerable().Select(x => x.AsDictionary().ToObject<T>(EnableDynamics));
         }
 
-        public IEnumerable<Record> FindAll()
+        public IEnumerable<ResultRow> FindAll()
         {
-            return FindAll<Record>();
+            return FindAll<ResultRow>();
         }
 
-        public IEnumerable<Record> FindAll(CommandExpression expression)
+        public ResultCollection FindAll(CommandExpression expression)
         {
-            return FindAll<Record>();
+            return Execute().ToEnumerable().ToObject<ResultCollection>(EnableDynamics);
         }
 
-        protected abstract IEnumerable<Record> Execute();
+        protected abstract IEnumerable<ResultRow> Execute();
     }
 }

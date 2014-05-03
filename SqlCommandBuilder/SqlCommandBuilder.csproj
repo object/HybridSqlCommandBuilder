@@ -43,12 +43,14 @@
     <Compile Include="Expressions\ExpressionOperator.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\ValueFormatterExtensions.cs" />
     <Compile Include="Expressions\FunctionMapping.cs" />
     <Compile Include="ICommandBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Record.cs" />
+    <Compile Include="ResultRow.cs" />
+    <Compile Include="ResultCollection.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ValueFormatter.cs" />
   </ItemGroup>

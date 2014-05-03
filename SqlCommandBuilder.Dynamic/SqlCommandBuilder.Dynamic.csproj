@@ -42,7 +42,8 @@
   <ItemGroup>
     <Compile Include="DynamicCommand.cs" />
     <Compile Include="DynamicCommandExpression.cs" />
-    <Compile Include="DynamicRecord.cs" />
+    <Compile Include="DynamicResultRow.cs" />
+    <Compile Include="DynamicResultCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

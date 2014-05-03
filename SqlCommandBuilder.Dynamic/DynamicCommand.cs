@@ -6,7 +6,8 @@ namespace SqlCommandBuilder.Dynamic
     {
         static DynamicCommand()
         {
-            DictionaryExtensions.CreateDynamicRecord = (x) => new DynamicRecord(x);
+            DictionaryExtensions.CreateDynamicResultRow = (x) => new DynamicResultRow(x);
+            EnumerableExtensions.CreateDynamicResultCollection = (x) => new DynamicResultCollection(x);
             CommandProcessor.EnableDynamics = true;
         }
 

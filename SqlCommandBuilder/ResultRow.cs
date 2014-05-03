@@ -2,18 +2,18 @@
 
 namespace SqlCommandBuilder
 {
-    public class Record
+    public class ResultRow
     {
         protected Dictionary<string, object> _data;
 
-        public Record()
+        public ResultRow()
         {
             _data = new Dictionary<string, object>();
         }
 
-        public Record(IDictionary<string, object> entry)
+        public ResultRow(IDictionary<string, object> data)
         {
-            _data = new Dictionary<string, object>(entry);
+            _data = new Dictionary<string, object>(data);
         }
 
         public object this[string key]
@@ -36,14 +36,14 @@ namespace SqlCommandBuilder
             return _data;
         }
 
-        public static explicit operator Record(Dictionary<string, object> entry)
+        public static explicit operator ResultRow(Dictionary<string, object> data)
         {
-            return new Record() { _data = entry };
+            return new ResultRow() { _data = data };
         }
 
-        public static explicit operator Dictionary<string, object>(Record entry)
+        public static explicit operator Dictionary<string, object>(ResultRow row)
         {
-            return entry._data;
+            return row._data;
         }
     }
 }
