@@ -30,19 +30,6 @@ namespace SqlCommandBuilder.Dynamic
             {
             }
 
-            public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
-            {
-                var methodInfo = typeof(DynamicResultCollection).GetMethod("GetEntryValue", BindingFlags.Instance | BindingFlags.NonPublic);
-                var arguments = new Expression[]
-                {
-                    Expression.Constant(binder.Name)
-                };
-
-                return new DynamicMetaObject(
-                    Expression.Call(Expression.Convert(Expression, LimitType), methodInfo, arguments),
-                    BindingRestrictions.GetTypeRestriction(Expression, LimitType));
-            }
-
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
             {
                 var value = this.HasValue

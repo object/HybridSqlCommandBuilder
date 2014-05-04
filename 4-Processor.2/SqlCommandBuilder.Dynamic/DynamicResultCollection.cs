@@ -29,17 +29,6 @@ namespace SqlCommandBuilder.Dynamic
                 : base(parameter, BindingRestrictions.Empty, value)
             {
             }
-
-            public override DynamicMetaObject BindConvert(ConvertBinder binder)
-            {
-                var value = this.HasValue
-                    ? (this.Value as DynamicResultCollection).AsEnumerable().ToObject(binder.Type, true)
-                    : null;
-
-                return new DynamicMetaObject(
-                    Expression.Constant(value),
-                    BindingRestrictions.GetTypeRestriction(Expression, LimitType));
-            }
         }
     }
 }
