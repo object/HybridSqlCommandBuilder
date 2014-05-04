@@ -8,7 +8,7 @@ namespace SqlCommandBuilder.Dynamic
 {
     public class DynamicCommandExpression : CommandExpression, IDynamicMetaObjectProvider
     {
-        internal DynamicCommandExpression()
+        public DynamicCommandExpression()
         {
         }
 

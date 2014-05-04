@@ -8,7 +8,14 @@ namespace SqlCommandBuilder.Dynamic
 {
     public class DynamicCommandExpression : CommandExpression, IDynamicMetaObjectProvider
     {
-        internal DynamicCommandExpression()
+        static DynamicCommandExpression()
+        {
+            DictionaryExtensions.CreateDynamicResultRow = (x) => new DynamicResultRow(x);
+            EnumerableExtensions.CreateDynamicResultCollection = (x) => new DynamicResultCollection(x);
+            CommandProcessor.EnableDynamics = true;
+        }
+
+        public DynamicCommandExpression()
         {
         }
 

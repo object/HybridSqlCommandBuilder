@@ -11,7 +11,7 @@ namespace SqlCommandBuilder.Tests
     {
         protected override Command SelectAllCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Build();
@@ -19,7 +19,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectAllWhereCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
@@ -28,7 +28,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectAllWhereFunctionCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName.Length() < 10 && x.CompanyName == x.CompanyName.ToUpper())
@@ -37,7 +37,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectColumnsWhereCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
@@ -47,7 +47,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectAllWhereOrderByCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
@@ -57,7 +57,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectColumnsWhereOrderByCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.YearEstablished > 2000 && x.NumberOfEmployees < 100)
@@ -70,7 +70,7 @@ namespace SqlCommandBuilder.Tests
         [Test]
         public void ExecuteFindOne()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             var command = SelectAllCommand();
             var commandProcessor = new FakeCommandProcessor(command);
             var result = commandProcessor.FindOne(x.Companies);
@@ -80,7 +80,7 @@ namespace SqlCommandBuilder.Tests
         [Test]
         public void ExecuteFindAllAsEnumerable()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             var command = SelectAllCommand();
             var commandProcessor = new FakeCommandProcessor(command);
             IEnumerable<dynamic> result = commandProcessor.FindAll(x.Companies);
@@ -92,7 +92,7 @@ namespace SqlCommandBuilder.Tests
         [Test]
         public void ExecuteFindAllAsList()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             var command = SelectAllCommand();
             var commandProcessor = new FakeCommandProcessor(command);
             List<dynamic> result = commandProcessor.FindAll(x.Companies);
@@ -104,7 +104,7 @@ namespace SqlCommandBuilder.Tests
         [Test]
         public void ExecuteFindAllAsArray()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             var command = SelectAllCommand();
             var commandProcessor = new FakeCommandProcessor(command);
             dynamic[] result = commandProcessor.FindAll(x.Companies);
@@ -116,7 +116,7 @@ namespace SqlCommandBuilder.Tests
         [Test]
         public void ExecuteFindOneAsTyped()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             var command = SelectAllCommand();
             var commandProcessor = new FakeCommandProcessor(command);
             Companies result = commandProcessor.FindOne(x.Companies);
@@ -126,7 +126,7 @@ namespace SqlCommandBuilder.Tests
         [Test]
         public void ExecuteFindAllAsTyped()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             var command = SelectAllCommand();
             var commandProcessor = new FakeCommandProcessor(command);
             IEnumerable<Companies> result = commandProcessor.FindAll(x.Companies);

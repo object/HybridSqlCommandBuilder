@@ -11,7 +11,7 @@ namespace SqlCommandBuilder.Tests
     {
         protected override Command SelectAllCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Build();
@@ -19,7 +19,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectAllWhereCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
@@ -28,7 +28,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectAllWhereFunctionCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName.Length() < 10 && x.CompanyName == x.CompanyName.ToUpper())
@@ -37,7 +37,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectColumnsWhereCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
@@ -47,7 +47,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectAllWhereOrderByCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.CompanyName == "DynamicSoft")
@@ -57,7 +57,7 @@ namespace SqlCommandBuilder.Tests
 
         protected override Command SelectColumnsWhereOrderByCommand()
         {
-            var x = DynamicCommand.Expression;
+            dynamic x = new DynamicCommandExpression();
             return _commandBuilder
                 .From(x.Companies)
                 .Where(x.YearEstablished > 2000 && x.NumberOfEmployees < 100)
