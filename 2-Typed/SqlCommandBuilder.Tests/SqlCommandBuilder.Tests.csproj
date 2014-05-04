@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Companies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TypedTests.cs" />
     <Compile Include="UntypedTests.cs" />
   </ItemGroup>
   <ItemGroup>
