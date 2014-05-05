@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace SqlCommandBuilder
 {
-    public class CommandBuilder
+    public class CommandBuilder : ICommandBuilder
     {
         public ICommandBuilder<ResultRow> From(string tableName)
         {

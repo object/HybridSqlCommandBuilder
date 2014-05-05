@@ -6,6 +6,11 @@ using System.Text;
 
 namespace SqlCommandBuilder
 {
+    public interface ICommandBuilder
+    {
+        ICommandBuilder<T> From<T>();
+    }
+
     public interface ICommandBuilder<T>
     {
         Command Build();

@@ -8,11 +8,12 @@ namespace SqlCommandBuilder
 {
     public interface ICommandBuilder
     {
-        Command Build();
-
+        ICommandBuilder From(string tableName);
         ICommandBuilder Where(string condition);
         ICommandBuilder Select(params string[] columns);
         ICommandBuilder OrderBy(params string[] columns);
         ICommandBuilder OrderByDescending(params string[] columns);
+
+        Command Build();
     }
 }
