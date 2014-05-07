@@ -9,6 +9,7 @@ namespace SqlCommandBuilder
     public interface ICommandBuilder
     {
         ICommandBuilder<T> From<T>();
+        ICommandBuilder<object> From(CommandExpression expression);
     }
 
     public interface ICommandBuilder<T>
