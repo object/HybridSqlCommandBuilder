@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SqlCommandBuilder
 {
-    public abstract class CommandProcessor
+    public abstract class CommandProcessor : ICommandProcessor
     {
         protected readonly Command _command;
 

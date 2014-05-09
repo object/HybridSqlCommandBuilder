@@ -48,6 +48,7 @@
     <Compile Include="Extensions\ValueFormatterExtensions.cs" />
     <Compile Include="Expressions\FunctionMapping.cs" />
     <Compile Include="ICommandBuilder.cs" />
+    <Compile Include="ICommandProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultRow.cs" />
     <Compile Include="ResultCollection.cs" />
