@@ -23,7 +23,8 @@ namespace SqlCommandBuilder
         }
     }
 
-    class CommandBuilder<T> : ICommandBuilder<T>
+    // WinPhone and Android requires this class to be public
+    public class CommandBuilder<T> : ICommandBuilder<T>
     {
         private readonly Command _command = new Command();
 

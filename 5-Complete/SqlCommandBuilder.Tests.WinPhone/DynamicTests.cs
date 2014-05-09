@@ -12,58 +12,58 @@ namespace SqlCommandBuilder.Tests
         protected override Command SelectAllCommand()
         {
             dynamic x = new DynamicCommandExpression();
-            return (_commandBuilder
-                .From(x.Companies) as ICommandBuilder<ResultRow>)
+            return _commandBuilder
+                .From(x.Companies)
                 .Build();
         }
 
         protected override Command SelectAllWhereCommand()
         {
             dynamic x = new DynamicCommandExpression();
-            return ((_commandBuilder
-                .From(x.Companies) as ICommandBuilder<ResultRow>)
-                .Where(x.CompanyName == "DynamicSoft") as ICommandBuilder<ResultRow>)
+            return _commandBuilder
+                .From(x.Companies)
+                .Where(x.CompanyName == "DynamicSoft")
                 .Build();
         }
 
         protected override Command SelectAllWhereFunctionCommand()
         {
             dynamic x = new DynamicCommandExpression();
-            return ((_commandBuilder
-                .From(x.Companies) as ICommandBuilder<ResultRow>)
-                .Where(x.CompanyName.Length() < 10 && x.CompanyName == x.CompanyName.ToUpper()) as ICommandBuilder<ResultRow>)
+            return _commandBuilder
+                .From(x.Companies)
+                .Where(x.CompanyName.Length() < 10 && x.CompanyName == x.CompanyName.ToUpper())
                 .Build();
         }
 
         protected override Command SelectColumnsWhereCommand()
         {
             dynamic x = new DynamicCommandExpression();
-            return (((_commandBuilder
-                .From(x.Companies) as ICommandBuilder<ResultRow>)
-                .Where(x.CompanyName == "DynamicSoft") as ICommandBuilder<ResultRow>)
-                .Select(x.CompanyName, x.Country, x.City) as ICommandBuilder<ResultRow>)
+            return _commandBuilder
+                .From(x.Companies)
+                .Where(x.CompanyName == "DynamicSoft")
+                .Select(x.CompanyName, x.Country, x.City)
                 .Build();
         }
 
         protected override Command SelectAllWhereOrderByCommand()
         {
             dynamic x = new DynamicCommandExpression();
-            return (((_commandBuilder
-                .From(x.Companies) as ICommandBuilder<ResultRow>)
-                .Where(x.CompanyName == "DynamicSoft") as ICommandBuilder<ResultRow>)
-                .OrderBy(x.Country) as ICommandBuilder<ResultRow>)
+            return _commandBuilder
+                .From(x.Companies)
+                .Where(x.CompanyName == "DynamicSoft")
+                .OrderBy(x.Country)
                 .Build();
         }
 
         protected override Command SelectColumnsWhereOrderByCommand()
         {
             dynamic x = new DynamicCommandExpression();
-            return (((((_commandBuilder
-                .From(x.Companies) as ICommandBuilder<ResultRow>)
-                .Where(x.YearEstablished > 2000 && x.NumberOfEmployees < 100) as ICommandBuilder<ResultRow>)
-                .Select(x.CompanyName, x.Country, x.City) as ICommandBuilder<ResultRow>)
-                .OrderBy(x.Country) as ICommandBuilder<ResultRow>)
-                .OrderByDescending(x.YearEstablished) as ICommandBuilder<ResultRow>)
+            return _commandBuilder
+                .From(x.Companies)
+                .Where(x.YearEstablished > 2000 && x.NumberOfEmployees < 100)
+                .Select(x.CompanyName, x.Country, x.City)
+                .OrderBy(x.Country)
+                .OrderByDescending(x.YearEstablished)
                 .Build();
         }
 
