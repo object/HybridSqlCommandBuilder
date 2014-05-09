@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{85E9A7
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlCommandBuilder.Tests.Android", "5-Complete\SqlCommandBuilder.Tests.Android\SqlCommandBuilder.Tests.Android.csproj", "{82DBE17F-914A-4EA9-97EB-990DCFDA3524}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,22 @@ Global
 		{155FB5F0-0FBF-458A-ADEE-B128754B7C70}.Release|x86.ActiveCfg = Release|x86
 		{155FB5F0-0FBF-458A-ADEE-B128754B7C70}.Release|x86.Build.0 = Release|x86
 		{155FB5F0-0FBF-458A-ADEE-B128754B7C70}.Release|x86.Deploy.0 = Release|x86
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|ARM.ActiveCfg = Release|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{82DBE17F-914A-4EA9-97EB-990DCFDA3524}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
